@@ -78,7 +78,7 @@ Use the language and framework of your choice (**pytest, Playwright, Cypress or 
 - **run each scenario N times** (you choose N and justify it) and report a **pass rate** per scenario,
 - make assertions on **behavior**: the tools that were called or not called, their arguments, and side effects in `/api/admin/*`. Don't rely only on exact reply text,
 - produce a readable summary as the output, for example a table with scenario, runs, pass % and threshold, plus whether it passed,
-- add the commands to run the suite to your PR description.
+- add the commands to run the suite to your submission email.
 
 **Bonus:** a CI job (GitHub Actions) that runs the suite and fails when a threshold is not met.
 
@@ -90,6 +90,23 @@ For each issue:
 - steps to reproduce (curl commands are welcome),
 - **reproduction rate** (for example "4/20 runs"),
 - expected versus actual behavior, with **trace evidence** where it applies.
+
+Write each bug in `BUGS.md` like a GitHub issue, using this template (do **not** open issues on this repository):
+
+```markdown
+## BUG-01: <short title>
+- **Severity:** Critical / High / Medium / Low, plus one line on why
+- **Environment:** API / curl, run count, seed or conversation id
+- **Reproduction rate:** e.g. 4/20 runs
+
+**Steps to reproduce**
+1. ...
+2. ...
+
+**Expected:** ...
+**Actual:** ...
+**Evidence:** trace id(s), curl command, eval name
+```
 
 ### 4. Release recommendation: `RELEASE_DECISION.md` (max 1 page)
 
@@ -121,16 +138,18 @@ The release window is at 9:00 PM PST tonight. Should Pixy ship? Answer **Go**, *
 | Strategy and leadership (`TEST_STRATEGY.md` and `RELEASE_DECISION.md`) | 20% |
 | Quality of the bug reports | 10% |
 | Use of AI tools (`AI_WORKFLOW.md`) | 10% |
-| Communication (PR description, trade-offs) | 5% |
+| Communication (submission email, trade-offs) | 5% |
 
 ## Submission
 
-1. **Fork** this repository.
-2. Create a branch named `submission/<your-name>`.
-3. Add your deliverables (`TEST_STRATEGY.md`, `BUGS.md`, `RELEASE_DECISION.md`, `AI_WORKFLOW.md` and `evals/`).
-4. Open a **Pull Request to `main`** that includes:
+> ⚠️ **Do not fork this repository, and do not open Pull Requests or Issues here.** This repository is public, so anything posted on it is visible to other candidates.
+
+1. Create **your own private repository**: click **Use this template → Create a new repository** and choose **Private**, or clone this repository and push it to a new private repository. Do not use a fork.
+2. Add your deliverables (`TEST_STRATEGY.md`, `BUGS.md`, `RELEASE_DECISION.md`, `AI_WORKFLOW.md` and `evals/`).
+3. Send your submission **by email** to the recruiter who sent you this test, before the deadline they gave you. Include:
+   - the link to your private repository (with access granted to the reviewers the recruiter tells you), **or** a `.zip` of your repository,
    - the time you spent,
-   - how to run your evaluation suite,
+   - how to install and run your evaluation suite,
    - the trade-offs you made and what you would do with more time.
 
 Good luck! 🤖
