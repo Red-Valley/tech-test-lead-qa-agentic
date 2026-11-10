@@ -142,14 +142,22 @@ The release window is at 9:00 PM PST tonight. Should Pixy ship? Answer **Go**, *
 
 ## Submission
 
+**Deadline: 72 hours** from the moment you receive this test.
+
 > ⚠️ **Do not fork this repository, and do not open Pull Requests or Issues here.** This repository is public, so anything posted on it is visible to other candidates.
 
-1. Create **your own private repository**: click **Use this template → Create a new repository** and choose **Private**, or clone this repository and push it to a new private repository. Do not use a fork.
+1. Put your work in **your own private repository**: click **Use this template → Create a new repository** and choose **Private**, or clone this repository and push it to a new private repository. Do not use a fork.
 2. Add your deliverables (`TEST_STRATEGY.md`, `BUGS.md`, `RELEASE_DECISION.md`, `AI_WORKFLOW.md` and `evals/`).
-3. Send your submission **by email** to the recruiter who sent you this test, before the deadline they gave you. Include:
-   - the link to your private repository (with access granted to the reviewers the recruiter tells you), **or** a `.zip` of your repository,
-   - the time you spent,
-   - how to install and run your evaluation suite,
-   - the trade-offs you made and what you would do with more time.
+3. Invite the GitHub user **`aatrv`** as a collaborator on your private repository (Settings → Collaborators).
+4. Send an email:
+   - **To:** almer.ibarra@rvstaffing.com
+   - **CC:** maria.leon@rvstaffing.com
+   - **Subject:** `Lead QA Engineer - <Your full name>` (for example `Lead QA Engineer - Jane Doe`)
+   - **Attachments:** your markdown files (`TEST_STRATEGY.md`, `BUGS.md`, `RELEASE_DECISION.md` and `AI_WORKFLOW.md`). Do **not** attach a `.zip`: email providers block archives that contain code.
+   - **Body:**
+     - the link to your private repository,
+     - the time you spent,
+     - how to install and run your evaluation suite,
+     - the trade-offs you made and what you would do with more time.
 
 Good luck! 🤖
