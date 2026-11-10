@@ -1,0 +1,11 @@
+{
+  "name": "pixel-market-support-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pixel Market support agent - system under test for the RVS Lead QA Engineer (Agentic Platforms) technical assessment",
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "reset": "node --no-warnings server.js --reset"
+  },
+  "engines": { "node": ">=22.13" }
+}

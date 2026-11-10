@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pixel Market Support</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: #f6f7fb; color: #1d2333; }
+    header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding: 12px 20px; background: #1d2333; color: #fff; }
+    header h1 { font-size: 18px; margin: 0; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 16px; display: flex; flex-direction: column; height: calc(100vh - 60px); }
+    #log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; padding: 8px 0; }
+    .msg { max-width: 80%; padding: 10px 14px; border-radius: 12px; white-space: pre-wrap; line-height: 1.4; }
+    .user { align-self: flex-end; background: #4b5bdc; color: #fff; }
+    .bot { align-self: flex-start; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+    form { display: flex; gap: 8px; }
+    input, select, button { font: inherit; padding: 10px; border-radius: 8px; border: 1px solid #c9cdd9; }
+    input { flex: 1; }
+    button { background: #4b5bdc; color: #fff; border: 0; cursor: pointer; }
+    .meta { font-size: 12px; color: #677087; }
+    a { color: #b9c2ff; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pixel Market Support · Pixy</h1>
+    <div>
+      <label>Customer <select id="customer" data-testid="customer-select"></select></label>
+      <label>Temp <input id="temp" data-testid="temperature" type="number" min="0" max="1" step="0.1" value="0.7" style="width:70px" /></label>
+      <button id="new" data-testid="new-conversation">New chat</button>
+    </div>
+  </header>
+  <div class="wrap">
+    <div class="meta">Conversation: <span id="cid" data-testid="conversation-id">—</span> · <a id="trace" target="_blank" data-testid="trace-link">view trace</a></div>
+    <div id="log" data-testid="chat-log"></div>
+    <form id="form">
+      <input id="msg" data-testid="chat-input" placeholder="Ask about an order, a refund or a game…" autocomplete="off" />
+      <button data-testid="send">Send</button>
+    </form>
+  </div>
+  <script>
+    let conversationId = null;
+    const $ = (id) => document.getElementById(id);
+    function add(text, who) {
+      const div = document.createElement('div');
+      div.className = 'msg ' + who;
+      div.dataset.testid = who === 'bot' ? 'bot-message' : 'user-message';
+      div.textContent = text;
+      $('log').appendChild(div);
+      $('log').scrollTop = $('log').scrollHeight;
+    }
+    function newChat() {
+      conversationId = null;
+      $('log').innerHTML = '';
+      $('cid').textContent = '—';
+      $('trace').removeAttribute('href');
+    }
+    fetch('/api/customers').then((r) => r.json()).then((cs) => {
+      $('customer').innerHTML = cs.map((c) => `<option value="${c.id}">${c.name}</option>`).join('');
+    });
+    $('customer').addEventListener('change', newChat);
+    $('new').addEventListener('click', newChat);
+    $('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const message = $('msg').value.trim();
+      if (!message) return;
+      add(message, 'user');
+      $('msg').value = '';
+      const res = await fetch('/api/agent/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Customer-Id': $('customer').value },
+        body: JSON.stringify({ conversationId, message, temperature: Number($('temp').value) }),
+      });
+      const data = await res.json();
+      if (!res.ok) return add('Error: ' + data.error, 'bot');
+      conversationId = data.conversationId;
+      $('cid').textContent = conversationId;
+      $('trace').href = '/api/agent/traces/' + conversationId;
+      add(data.reply, 'bot');
+    });
+  </script>
+</body>
+</html>
